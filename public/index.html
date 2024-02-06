@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Viewer</title>
+    <!-- Include Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4">
+        <h1 class="text-xl font-semibold text-gray-800 py-4">Real-Time Log Viewer</h1>
+        <ul id="logs" class="list-disc"></ul>
+    </div>
+
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+    <script>
+        const socket = io(); // Connect to the server
+        socket.on('newLog', function(log) {
+            const logElement = document.createElement('li');
+            logElement.textContent = log;
+            // Apply Tailwind Classes
+            logElement.className = 'rounded shadow p-3 mb-2 bg-white border border-gray-200 text-gray-700';
+            // Apply inline style for whitespace
+            logElement.style.whiteSpace = 'pre';
+            document.getElementById('logs').appendChild(logElement);
+        });
+    </script>
+    
+    
+</body>
+</html>
