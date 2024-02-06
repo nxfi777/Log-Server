@@ -39,4 +39,11 @@ def handle_connection():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    socketio.run(app, port=port, debug=True)
+    if 'eventlet' in socketio.server_options['async_mode']:
+        import eventlet
+        eventlet.monkey_patch()
+        print("EVENTLET")
+        socketio.run(app, host='0.0.0.0', port=port, debug=False)
+    else:
+        print("NOT EVENTLET")
+        socketio.run(app, host='0.0.0.0', port=port, debug=False)
